@@ -1,0 +1,16 @@
+{
+  "name": "AA. 分帳神器",
+  "short_name": "AA分帳",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#8fa8e8",
+  "theme_color": "#8fa8e8",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
