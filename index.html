@@ -1,0 +1,3311 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<link rel="manifest" href="manifest.json?v=3">
+<meta name="theme-color" content="#82a8e5">
+<link rel="apple-touch-icon" href="icon.png?v=3">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>AA. 分帳神器 V4</title>
+
+    <!-- App 圖示 -->
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#8fa8e8">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="AA分帳">
+
+    <style>
+        /* 你原本的 CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans TC",
+        sans-serif;
+
+    color: #18345f;
+    min-height: 100vh;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 5%,
+            rgba(255,255,255,.48),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 88% 12%,
+            rgba(255,184,214,.55),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 15% 75%,
+            rgba(255,185,160,.38),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(153,181,255,.35),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            180deg,
+            #6f9fe0 0%,
+            #82a8e5 18%,
+            #9fa9e4 38%,
+            #c4a8d7 57%,
+            #e5aaa9 75%,
+            #edae9e 100%
+        );
+
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(255,255,255,.18),
+            transparent 45%
+        ),
+
+        radial-gradient(
+            ellipse at 0% 100%,
+            rgba(255,200,170,.2),
+            transparent 40%
+        ),
+
+        radial-gradient(
+            ellipse at 100% 60%,
+            rgba(145,175,255,.18),
+            transparent 42%
+        );
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    background:
+
+        radial-gradient(
+            circle at 12% 20%,
+            rgba(255,255,255,.35) 0 1.5px,
+            transparent 2.5px
+        ),
+
+        radial-gradient(
+            circle at 78% 15%,
+            rgba(255,255,255,.3) 0 1.5px,
+            transparent 2.5px
+        ),
+
+        radial-gradient(
+            circle at 60% 42%,
+            rgba(255,255,255,.22) 0 1.5px,
+            transparent 2.5px
+        ),
+
+        radial-gradient(
+            circle at 20% 65%,
+            rgba(255,255,255,.2) 0 2px,
+            transparent 3px
+        );
+
+    background-size:
+        190px 190px,
+        230px 230px,
+        260px 260px,
+        300px 300px;
+
+    opacity: .65;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+.app {
+    width: 100%;
+    max-width: 560px;
+    margin: auto;
+
+    padding:
+        20px
+        16px
+        60px;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.version {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.14);
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    color: #fff;
+
+    backdrop-filter: blur(10px);
+}
+
+/* CARD */
+
+.card {
+    background: rgba(255,255,255,.68);
+
+    border:
+        1px solid rgba(255,255,255,.78);
+
+    border-radius: 22px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 12px 35px rgba(38,55,110,.13);
+}
+
+.title {
+    color: #17345f;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    color: #52688f;
+
+    font-size: 12px;
+
+    margin-top: -7px;
+    margin-bottom: 15px;
+
+    line-height: 1.6;
+}
+
+/* TOTAL */
+
+.total-card {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.82),
+            rgba(222,232,255,.68)
+        );
+}
+
+.total-label {
+    color: #4d6288;
+    font-size: 13px;
+}
+
+.total-number {
+    color: #17345f;
+
+    font-size: 38px;
+    font-weight: 900;
+
+    margin-top: 4px;
+}
+
+/* INPUT */
+
+input[type="text"],
+input[type="number"] {
+
+    width: 100%;
+
+    padding:
+        13px
+        14px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid rgba(86,116,170,.18);
+
+    outline: none;
+
+    background:
+        rgba(255,255,255,.68);
+
+    color: #19375f;
+
+    margin-bottom: 10px;
+
+    backdrop-filter: blur(10px);
+}
+
+input::placeholder {
+    color: #8292ad;
+}
+
+input:focus {
+    background:
+        rgba(255,255,255,.82);
+
+    border-color:
+        rgba(86,116,220,.5);
+}
+
+/* BUTTON */
+
+.primary {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #765cff,
+            #477fff
+        );
+
+    color: #fff;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 22px
+        rgba(74,83,220,.28);
+}
+
+.primary:active {
+    transform: scale(.98);
+}
+
+.secondary {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.55);
+
+    color: #31517b;
+
+    font-weight: 700;
+
+    border:
+        1px solid rgba(255,255,255,.7);
+}
+
+.secondary.danger {
+    color: #c94e62;
+}
+
+.small-btn {
+    padding:
+        8px
+        11px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.58);
+
+    color: #526b91;
+
+    font-size: 12px;
+}
+
+/* MEMBERS */
+
+.member-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+}
+
+.member {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background:
+        rgba(255,255,255,.58);
+
+    padding:
+        8px
+        10px;
+
+    border-radius: 13px;
+
+    font-size: 13px;
+
+    color: #24456f;
+
+    border:
+        1px solid rgba(255,255,255,.65);
+}
+
+.member button {
+    background: none;
+    color: #7184a4;
+    font-size: 14px;
+}
+
+/* MODE */
+
+.mode-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.mode-btn {
+    padding: 12px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.48);
+
+    color: #587092;
+
+    border:
+        1px solid rgba(255,255,255,.7);
+
+    font-weight: 800;
+}
+
+.mode-btn.active {
+    background:
+        linear-gradient(
+            135deg,
+            #765cff,
+            #477fff
+        );
+
+    color: white;
+
+    border-color: transparent;
+
+    box-shadow:
+        0 7px 18px
+        rgba(74,83,220,.22);
+}
+
+/* PERSON MONEY */
+
+.person-money-list {
+    display: grid;
+    gap: 9px;
+
+    margin-bottom: 12px;
+}
+
+.person-money-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    background:
+        rgba(255,255,255,.52);
+
+    padding:
+        10px
+        11px;
+
+    border-radius: 13px;
+
+    color: #28496f;
+
+    border:
+        1px solid rgba(255,255,255,.55);
+}
+
+.person-money-name {
+    font-weight: 700;
+}
+
+.person-money-input {
+    width: 125px !important;
+
+    margin: 0 !important;
+
+    padding:
+        9px 10px !important;
+
+    text-align: right;
+}
+
+/* CHECK */
+
+.checkbox-list {
+    display: grid;
+    gap: 8px;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        rgba(255,255,255,.52);
+
+    padding:
+        10px
+        11px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    color: #28496f;
+}
+
+.check-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.check-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+
+    accent-color: #745cff;
+}
+
+/* STATUS */
+
+.payment-status {
+    margin-top: 12px;
+
+    padding:
+        10px
+        12px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.status-ok {
+    color: #16865a;
+    background: rgba(91,225,164,.18);
+}
+
+.status-warn {
+    color: #a66a00;
+    background: rgba(255,196,83,.2);
+}
+
+.status-error {
+    color: #bd4050;
+    background: rgba(255,100,120,.16);
+}
+
+/* PAYMENT */
+
+.payment-box {
+    border:
+        1px solid rgba(255,255,255,.65);
+
+    background:
+        rgba(255,255,255,.48);
+
+    border-radius: 18px;
+
+    padding: 15px;
+
+    margin-bottom: 12px;
+}
+
+.payment-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+.payment-name {
+    font-weight: 800;
+    font-size: 15px;
+    color: #19375f;
+}
+
+.payment-amount {
+    font-weight: 900;
+    color: #17345f;
+}
+
+.payment-info {
+    color: #607596;
+
+    font-size: 12px;
+
+    margin-bottom: 8px;
+
+    line-height: 1.5;
+}
+
+.detail-line {
+    display: flex;
+    justify-content: space-between;
+
+    padding:
+        7px
+        0;
+
+    border-bottom:
+        1px solid rgba(86,116,170,.08);
+
+    font-size: 12px;
+
+    color: #526b91;
+}
+
+.detail-line:last-child {
+    border-bottom: none;
+}
+
+/* RESULT */
+
+.result {
+    display: none;
+}
+
+.result.show {
+    display: block;
+}
+
+.person-result {
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid rgba(86,116,170,.1);
+}
+
+.person-result:last-child {
+    border-bottom: none;
+}
+
+.person-top {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+}
+
+.person-name {
+    font-weight: 800;
+    color: #19375f;
+}
+
+.person-balance {
+    font-weight: 900;
+}
+
+.balance-positive {
+    color: #159461;
+}
+
+.balance-negative {
+    color: #d84860;
+}
+
+.balance-zero {
+    color: #6e7e98;
+}
+
+.person-detail {
+    display: flex;
+    justify-content: space-between;
+
+    color: #687d9d;
+
+    font-size: 11px;
+}
+
+/* TRANSFER */
+
+.transfer-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        14px 0;
+
+    border-bottom:
+        1px solid rgba(86,116,170,.1);
+
+    color: #19375f;
+}
+
+.transfer-item:last-child {
+    border-bottom: none;
+}
+
+.transfer-arrow {
+    color: #7184a4;
+
+    padding:
+        0 8px;
+}
+
+.transfer-amount {
+    font-weight: 900;
+    color: #17345f;
+}
+
+/* EMPTY */
+
+.empty {
+    text-align: center;
+
+    padding:
+        18px 0;
+
+    color: #687d9d;
+
+    font-size: 13px;
+}
+
+/* NOTE */
+
+.note {
+    font-size: 11px;
+
+    color: #687d9d;
+
+    line-height: 1.6;
+
+    margin-top: 10px;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+
+    color: rgba(255,255,255,.82);
+
+    font-size: 11px;
+
+    padding-top: 5px;
+}
+
+/* DIVIDER */
+
+.divider {
+    height: 1px;
+
+    background:
+        rgba(86,116,170,.12);
+
+    margin:
+        17px 0;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            AA.
+        </div>
+
+        <div class="version">
+            V4 · 智慧對帳
+        </div>
+
+    </div>
+
+
+    <!-- TOTAL -->
+
+    <div class="card total-card">
+
+        <div class="total-label">
+            目前消費總額
+        </div>
+
+        <div
+            class="total-number"
+            id="totalAmount"
+        >
+            $0
+        </div>
+
+    </div>
+
+
+    <!-- MEMBERS -->
+
+    <div class="card">
+
+        <div class="title">
+            👥 成員
+        </div>
+
+        <div
+            id="memberList"
+            class="member-list"
+        ></div>
+
+        <input
+            id="memberInput"
+            type="text"
+            placeholder="輸入成員名稱，例如：小明"
+            maxlength="20"
+        >
+
+        <button
+            class="primary"
+            onclick="addMember()"
+        >
+            ＋ 新增成員
+        </button>
+
+    </div>
+
+
+    <!-- NEW PAYMENT -->
+
+    <div class="card">
+
+        <div class="title">
+            🧾 新增消費
+        </div>
+
+        <input
+            id="paymentTitle"
+            type="text"
+            placeholder="消費名稱，例如：早餐"
+            maxlength="30"
+        >
+
+        <input
+            id="paymentAmount"
+            type="number"
+            placeholder="這筆消費總額"
+            min="0"
+            step="1"
+        >
+
+
+        <div class="subtitle">
+            先選擇這筆消費的分帳方式
+        </div>
+
+
+        <div class="mode-buttons">
+
+            <button
+                id="averageModeBtn"
+                class="mode-btn active"
+                onclick="setPaymentMode('average')"
+            >
+                ⚖️ 平均分攤
+            </button>
+
+            <button
+                id="customModeBtn"
+                class="mode-btn"
+                onclick="setPaymentMode('custom')"
+            >
+                ✏️ 自訂金額
+            </button>
+
+        </div>
+
+
+        <!-- AVERAGE -->
+
+        <div id="averageMode">
+
+            <div class="subtitle">
+                選擇有哪些人參與這筆消費，系統會自動平均。
+            </div>
+
+            <div
+                id="paymentParticipants"
+                class="checkbox-list"
+            ></div>
+
+        </div>
+
+
+        <!-- CUSTOM -->
+
+        <div
+            id="customMode"
+            style="display:none;"
+        >
+
+            <div class="subtitle">
+                直接輸入每個人這一餐實際應負擔多少。
+            </div>
+
+            <div
+                id="customAmounts"
+                class="person-money-list"
+            ></div>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <div class="subtitle">
+
+            💳 實際付款
+
+            <br>
+
+            輸入每個人實際拿出多少錢。
+
+            <br>
+
+            可以多人一起付款。
+
+        </div>
+
+
+        <div
+            id="paymentPayers"
+            class="person-money-list"
+        ></div>
+
+
+        <div id="newPaymentStatus"></div>
+
+
+        <br>
+
+
+        <button
+            class="primary"
+            onclick="addPayment()"
+        >
+            ＋ 加入這筆消費
+        </button>
+
+    </div>
+
+
+    <!-- PAYMENT LIST -->
+
+    <div class="card">
+
+        <div class="title">
+            📋 消費紀錄
+        </div>
+
+        <div id="paymentList"></div>
+
+    </div>
+
+
+    <!-- CALCULATE -->
+
+    <div class="card">
+
+        <div class="title">
+            💰 智慧對帳
+        </div>
+
+        <div class="subtitle">
+
+            系統會將每個人的「實際應負擔」
+            與「實際已付款」進行對帳。
+
+        </div>
+
+        <button
+            class="primary"
+            onclick="calculate()"
+        >
+            💰 開始對帳
+        </button>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div
+        class="card result"
+        id="resultCard"
+    >
+
+        <div class="title">
+            📊 每個人的帳
+        </div>
+
+        <div id="resultList"></div>
+
+    </div>
+
+
+    <!-- TRANSFERS -->
+
+    <div
+        class="card result"
+        id="transferCard"
+    >
+
+        <div class="title">
+            💸 最終轉帳方式
+        </div>
+
+        <div id="transferList"></div>
+
+        <button
+            class="secondary"
+            style="margin-top:14px"
+            onclick="copyResult()"
+        >
+            📋 複製結算結果
+        </button>
+
+    </div>
+
+
+    <!-- RESET -->
+
+    <div class="card">
+
+        <button
+            class="secondary danger"
+            onclick="resetAll()"
+        >
+            清除本次分帳
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+        AA. 分帳神器 · V4
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   DATA
+================================================== */
+
+let data = {
+
+    members: [],
+
+    payments: []
+
+};
+
+let lastSettlement = null;
+
+let currentPaymentMode = "average";
+
+
+/* ==================================================
+   SAVE
+================================================== */
+
+function saveData() {
+
+    localStorage.setItem(
+        "AA_V4_DATA",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ==================================================
+   LOAD
+================================================== */
+
+function loadData() {
+
+    const saved =
+        localStorage.getItem(
+            "AA_V4_DATA"
+        );
+
+
+    if (saved) {
+
+        try {
+
+            data = JSON.parse(saved);
+
+        } catch (e) {
+
+            data = {
+                members: [],
+                payments: []
+            };
+
+        }
+
+    }
+
+    renderAll();
+
+}
+
+
+/* ==================================================
+   MONEY
+================================================== */
+
+function roundMoney(number) {
+
+    return Math.round(
+        Number(number) * 100
+    ) / 100;
+
+}
+
+
+function formatMoney(number) {
+
+    return "$" +
+        roundMoney(number)
+            .toLocaleString(
+                "zh-TW"
+            );
+
+}
+
+
+/* ==================================================
+   ESCAPE
+================================================== */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ==================================================
+   MEMBER
+================================================== */
+
+function addMember() {
+
+    const input =
+        document.getElementById(
+            "memberInput"
+        );
+
+    const name =
+        input.value.trim();
+
+
+    if (!name) {
+
+        alert(
+            "請輸入成員名稱！"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        data.members.includes(name)
+    ) {
+
+        alert(
+            "這個成員已經存在！"
+        );
+
+        return;
+
+    }
+
+
+    data.members.push(name);
+
+    input.value = "";
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+function deleteMember(index) {
+
+    const name =
+        data.members[index];
+
+
+    const used =
+        data.payments.some(
+            payment =>
+
+                payment.people.some(
+                    p =>
+                        p.name === name
+                ) ||
+
+                payment.payers.some(
+                    p =>
+                        p.name === name
+                )
+        );
+
+
+    if (used) {
+
+        alert(
+            "這位成員已經出現在消費紀錄中，請先刪除相關消費。"
+        );
+
+        return;
+
+    }
+
+
+    data.members.splice(
+        index,
+        1
+    );
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* ==================================================
+   MEMBERS RENDER
+================================================== */
+
+function renderMembers() {
+
+    const box =
+        document.getElementById(
+            "memberList"
+        );
+
+
+    if (
+        data.members.length === 0
+    ) {
+
+        box.innerHTML =
+            `
+            <div class="empty">
+                還沒有成員
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+
+        data.members
+            .map(
+                (name, index) =>
+
+                    `
+                    <div class="member">
+
+                        <span>
+                            👤
+                            ${escapeHTML(name)}
+                        </span>
+
+                        <button
+                            onclick="deleteMember(${index})"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+                    `
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   PAYMENT MODE
+================================================== */
+
+function setPaymentMode(mode) {
+
+    currentPaymentMode = mode;
+
+
+    const average =
+        document.getElementById(
+            "averageMode"
+        );
+
+    const custom =
+        document.getElementById(
+            "customMode"
+        );
+
+
+    const averageBtn =
+        document.getElementById(
+            "averageModeBtn"
+        );
+
+    const customBtn =
+        document.getElementById(
+            "customModeBtn"
+        );
+
+
+    if (mode === "average") {
+
+        average.style.display =
+            "block";
+
+        custom.style.display =
+            "none";
+
+        averageBtn.classList.add(
+            "active"
+        );
+
+        customBtn.classList.remove(
+            "active"
+        );
+
+    }
+
+    else {
+
+        average.style.display =
+            "none";
+
+        custom.style.display =
+            "block";
+
+        averageBtn.classList.remove(
+            "active"
+        );
+
+        customBtn.classList.add(
+            "active"
+        );
+
+    }
+
+
+    updateNewPaymentStatus();
+
+}
+
+
+/* ==================================================
+   PAYMENT FORM
+================================================== */
+
+function renderPaymentForm() {
+
+    const participantBox =
+        document.getElementById(
+            "paymentParticipants"
+        );
+
+
+    const customBox =
+        document.getElementById(
+            "customAmounts"
+        );
+
+
+    const payerBox =
+        document.getElementById(
+            "paymentPayers"
+        );
+
+
+    if (
+        data.members.length === 0
+    ) {
+
+        participantBox.innerHTML =
+            `
+            <div class="empty">
+                請先新增成員
+            </div>
+            `;
+
+        customBox.innerHTML = "";
+
+        payerBox.innerHTML = "";
+
+        return;
+
+    }
+
+
+    /* 平均分攤 */
+
+    participantBox.innerHTML =
+
+        data.members
+            .map(
+                name =>
+
+                    `
+                    <label class="check-row">
+
+                        <div class="check-left">
+
+                            <input
+                                type="checkbox"
+                                class="participant-check"
+                                value="${escapeHTML(name)}"
+                                checked
+                                onchange="updateNewPaymentStatus()"
+                            >
+
+                            <span>
+                                ${escapeHTML(name)}
+                            </span>
+
+                        </div>
+
+                    </label>
+                    `
+            )
+            .join("");
+
+
+    /* 自訂金額 */
+
+    customBox.innerHTML =
+
+        data.members
+            .map(
+                name =>
+
+                    `
+                    <div class="person-money-row">
+
+                        <span class="person-money-name">
+                            ${escapeHTML(name)}
+                        </span>
+
+                        <input
+                            type="number"
+                            class="person-money-input custom-money"
+                            data-name="${escapeHTML(name)}"
+                            placeholder="$0"
+                            min="0"
+                            step="1"
+                            oninput="updateNewPaymentStatus()"
+                        >
+
+                    </div>
+                    `
+            )
+            .join("");
+
+
+    /* 實際付款 */
+
+    payerBox.innerHTML =
+
+        data.members
+            .map(
+                name =>
+
+                    `
+                    <div class="person-money-row">
+
+                        <span class="person-money-name">
+                            ${escapeHTML(name)}
+                        </span>
+
+                        <input
+                            type="number"
+                            class="person-money-input payer-money"
+                            data-name="${escapeHTML(name)}"
+                            placeholder="$0"
+                            min="0"
+                            step="1"
+                            oninput="updateNewPaymentStatus()"
+                        >
+
+                    </div>
+                    `
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   GET EXPECTED AMOUNTS
+================================================== */
+
+function getExpectedAmounts() {
+
+    const amount =
+
+        Number(
+            document.getElementById(
+                "paymentAmount"
+            ).value
+        ) || 0;
+
+
+    const result = {};
+
+
+    data.members.forEach(
+        name => {
+
+            result[name] = 0;
+
+        }
+    );
+
+
+    /* 平均 */
+
+    if (
+        currentPaymentMode ===
+        "average"
+    ) {
+
+        const checks =
+            document.querySelectorAll(
+                ".participant-check:checked"
+            );
+
+
+        const participants =
+            Array.from(
+                checks
+            ).map(
+                check =>
+                    check.value
+            );
+
+
+        if (
+            participants.length === 0
+        ) {
+
+            return result;
+
+        }
+
+
+        const each =
+            amount /
+            participants.length;
+
+
+        participants.forEach(
+            name => {
+
+                result[name] =
+                    each;
+
+            }
+        );
+
+    }
+
+
+    /* 自訂 */
+
+    else {
+
+        document
+            .querySelectorAll(
+                ".custom-money"
+            )
+            .forEach(
+                input => {
+
+                    const name =
+                        input.dataset.name;
+
+
+                    result[name] =
+                        Number(
+                            input.value
+                        ) || 0;
+
+                }
+            );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* ==================================================
+   GET PAYERS
+================================================== */
+
+function getPayers() {
+
+    const result = [];
+
+
+    document
+        .querySelectorAll(
+            ".payer-money"
+        )
+        .forEach(
+            input => {
+
+                const amount =
+                    Number(
+                        input.value
+                    ) || 0;
+
+
+                if (
+                    amount > 0
+                ) {
+
+                    result.push({
+
+                        name:
+                            input.dataset.name,
+
+                        amount:
+                            roundMoney(amount)
+
+                    });
+
+                }
+
+            }
+        );
+
+
+    return result;
+
+}
+
+
+/* ==================================================
+   PAYMENT STATUS
+================================================== */
+
+function updateNewPaymentStatus() {
+
+    const amount =
+
+        Number(
+            document.getElementById(
+                "paymentAmount"
+            ).value
+        ) || 0;
+
+
+    const expected =
+        getExpectedAmounts();
+
+
+    const payers =
+        getPayers();
+
+
+    const expectedTotal =
+
+        Object.values(
+            expected
+        )
+        .reduce(
+            (sum, value) =>
+                sum + Number(value),
+
+            0
+        );
+
+
+    const paidTotal =
+
+        payers.reduce(
+            (sum, payer) =>
+                sum +
+                Number(
+                    payer.amount
+                ),
+
+            0
+        );
+
+
+    const box =
+        document.getElementById(
+            "newPaymentStatus"
+        );
+
+
+    if (!amount) {
+
+        box.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const expectedDiff =
+        roundMoney(
+            expectedTotal - amount
+        );
+
+
+    const paidDiff =
+        roundMoney(
+            paidTotal - amount
+        );
+
+
+    let html = "";
+
+
+    /* 應負擔 */
+
+    if (
+        Math.abs(expectedDiff)
+        < 0.01
+    ) {
+
+        html +=
+            `
+            <div
+                class="payment-status status-ok"
+            >
+                ✅ 應負擔金額正確：
+                ${formatMoney(expectedTotal)}
+            </div>
+            `;
+
+    }
+
+    else if (
+        expectedDiff < 0
+    ) {
+
+        html +=
+            `
+            <div
+                class="payment-status status-warn"
+            >
+                ⚠️ 每個人的應付金額還少
+                ${formatMoney(
+                    Math.abs(expectedDiff)
+                )}
+            </div>
+            `;
+
+    }
+
+    else {
+
+        html +=
+            `
+            <div
+                class="payment-status status-error"
+            >
+                ❌ 每個人的應付金額多了
+                ${formatMoney(
+                    expectedDiff
+                )}
+            </div>
+            `;
+
+    }
+
+
+    /* 實際付款 */
+
+    if (
+        Math.abs(paidDiff)
+        < 0.01
+    ) {
+
+        html +=
+            `
+            <div
+                class="payment-status status-ok"
+            >
+                💳 實際付款正確：
+                ${formatMoney(paidTotal)}
+            </div>
+            `;
+
+    }
+
+    else if (
+        paidDiff < 0
+    ) {
+
+        html +=
+            `
+            <div
+                class="payment-status status-warn"
+            >
+                💳 實際付款還差
+                ${formatMoney(
+                    Math.abs(paidDiff)
+                )}
+            </div>
+            `;
+
+    }
+
+    else {
+
+        html +=
+            `
+            <div
+                class="payment-status status-error"
+            >
+                💳 實際付款多了
+                ${formatMoney(
+                    paidDiff
+                )}
+            </div>
+            `;
+
+    }
+
+
+    box.innerHTML = html;
+
+}
+
+
+/* ==================================================
+   ADD PAYMENT
+================================================== */
+
+function addPayment() {
+
+    const title =
+        document.getElementById(
+            "paymentTitle"
+        ).value.trim();
+
+
+    const amount =
+
+        Number(
+            document.getElementById(
+                "paymentAmount"
+            ).value
+        );
+
+
+    if (!title) {
+
+        alert(
+            "請輸入消費名稱！"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !amount ||
+        amount <= 0
+    ) {
+
+        alert(
+            "請輸入正確的消費金額！"
+        );
+
+        return;
+
+    }
+
+
+    const expected =
+        getExpectedAmounts();
+
+
+    const expectedTotal =
+
+        Object.values(
+            expected
+        )
+        .reduce(
+            (sum, value) =>
+                sum + Number(value),
+
+            0
+        );
+
+
+    const payers =
+        getPayers();
+
+
+    const paidTotal =
+
+        payers.reduce(
+            (sum, payer) =>
+                sum +
+                Number(
+                    payer.amount
+                ),
+
+            0
+        );
+
+
+    if (
+        Math.abs(
+            expectedTotal - amount
+        ) > 0.01
+    ) {
+
+        alert(
+            "每個人的應負擔金額，沒有剛好等於這筆消費總額！\n\n" +
+
+            `消費總額：
+${formatMoney(amount)}\n` +
+
+            `目前應負擔：
+${formatMoney(expectedTotal)}\n` +
+
+            `差額：
+${formatMoney(
+    Math.abs(
+        expectedTotal - amount
+    )
+)}`
+        );
+
+        return;
+
+    }
+
+
+    if (
+        payers.length === 0
+    ) {
+
+        alert(
+            "請至少輸入一位實際付款人！"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        Math.abs(
+            paidTotal - amount
+        ) > 0.01
+    ) {
+
+        alert(
+            "實際付款金額不正確！\n\n" +
+
+            `消費總額：
+${formatMoney(amount)}\n` +
+
+            `目前付款：
+${formatMoney(paidTotal)}\n` +
+
+            `差額：
+${formatMoney(
+    Math.abs(
+        paidTotal - amount
+    )
+)}`
+        );
+
+        return;
+
+    }
+
+
+    const people =
+
+        data.members
+            .map(
+                name => ({
+
+                    name: name,
+
+                    expected:
+                        roundMoney(
+                            expected[name]
+                        )
+
+                })
+            )
+            .filter(
+                person =>
+                    person.expected > 0
+            );
+
+
+    data.payments.push({
+
+        id: Date.now(),
+
+        title: title,
+
+        amount:
+            roundMoney(amount),
+
+        people: people,
+
+        payers: payers
+
+    });
+
+
+    document.getElementById(
+        "paymentTitle"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentAmount"
+    ).value = "";
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* ==================================================
+   DELETE PAYMENT
+================================================== */
+
+function deletePayment(index) {
+
+    if (
+        !confirm(
+            "確定要刪除這筆消費嗎？"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    data.payments.splice(
+        index,
+        1
+    );
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* ==================================================
+   RENDER PAYMENTS
+================================================== */
+
+function renderPayments() {
+
+    const box =
+        document.getElementById(
+            "paymentList"
+        );
+
+
+    if (
+        data.payments.length === 0
+    ) {
+
+        box.innerHTML =
+            `
+            <div class="empty">
+                還沒有消費紀錄
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+
+        data.payments
+            .map(
+                (payment, index) => {
+
+                    const peopleText =
+
+                        payment.people
+                            .map(
+                                person =>
+
+                                    `
+                                    <div class="detail-line">
+
+                                        <span>
+                                            ${escapeHTML(
+                                                person.name
+                                            )}
+                                        </span>
+
+                                        <span>
+                                            ${formatMoney(
+                                                person.expected
+                                            )}
+                                        </span>
+
+                                    </div>
+                                    `
+                            )
+                            .join("");
+
+
+                    const payerText =
+
+                        payment.payers
+                            .map(
+                                payer =>
+
+                                    `
+                                    <div class="detail-line">
+
+                                        <span>
+                                            ${escapeHTML(
+                                                payer.name
+                                            )}
+                                        </span>
+
+                                        <span>
+                                            ${formatMoney(
+                                                payer.amount
+                                            )}
+                                        </span>
+
+                                    </div>
+                                    `
+                            )
+                            .join("");
+
+
+                    return `
+
+                        <div class="payment-box">
+
+                            <div class="payment-header">
+
+                                <div class="payment-name">
+
+                                    ${escapeHTML(
+                                        payment.title
+                                    )}
+
+                                </div>
+
+                                <div class="payment-amount">
+
+                                    ${formatMoney(
+                                        payment.amount
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="payment-info">
+
+                                👤 每人實際應負擔
+
+                            </div>
+
+                            ${peopleText}
+
+
+                            <div
+                                style="height:10px"
+                            ></div>
+
+
+                            <div class="payment-info">
+
+                                💳 實際付款
+
+                            </div>
+
+                            ${payerText}
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:flex-end;
+                                    margin-top:10px;
+                                "
+                            >
+
+                                <button
+                                    class="small-btn"
+                                    onclick="deletePayment(${index})"
+                                >
+                                    刪除
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   TOTAL
+================================================== */
+
+function renderTotal() {
+
+    const total =
+
+        data.payments.reduce(
+
+            (sum, payment) =>
+
+                sum +
+                Number(
+                    payment.amount
+                ),
+
+            0
+
+        );
+
+
+    document.getElementById(
+        "totalAmount"
+    ).textContent =
+
+        formatMoney(total);
+
+}
+
+
+/* ==================================================
+   CALCULATE
+================================================== */
+
+function calculate() {
+
+    if (
+        data.members.length === 0
+    ) {
+
+        alert(
+            "請先新增成員！"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        data.payments.length === 0
+    ) {
+
+        alert(
+            "目前還沒有任何消費！"
+        );
+
+        return;
+
+    }
+
+
+    const expected = {};
+
+    const paid = {};
+
+
+    data.members.forEach(
+        name => {
+
+            expected[name] = 0;
+
+            paid[name] = 0;
+
+        }
+    );
+
+
+    /* 每個人的應負擔 */
+
+    data.payments.forEach(
+        payment => {
+
+            payment.people.forEach(
+                person => {
+
+                    if (
+                        expected[
+                            person.name
+                        ] !== undefined
+                    ) {
+
+                        expected[
+                            person.name
+                        ] +=
+                            Number(
+                                person.expected
+                            );
+
+                    }
+
+                }
+            );
+
+
+            /* 每個人的實際付款 */
+
+            payment.payers.forEach(
+                payer => {
+
+                    if (
+                        paid[
+                            payer.name
+                        ] !== undefined
+                    ) {
+
+                        paid[
+                            payer.name
+                        ] +=
+                            Number(
+                                payer.amount
+                            );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    data.members.forEach(
+        name => {
+
+            expected[name] =
+                roundMoney(
+                    expected[name]
+                );
+
+            paid[name] =
+                roundMoney(
+                    paid[name]
+                );
+
+        }
+    );
+
+
+    /* 對帳 */
+
+    const balances = {};
+
+
+    data.members.forEach(
+        name => {
+
+            balances[name] =
+
+                roundMoney(
+                    paid[name] -
+                    expected[name]
+                );
+
+        }
+    );
+
+
+    const transfers =
+        calculateTransfers(
+            balances
+        );
+
+
+    renderResults(
+        expected,
+        paid,
+        balances
+    );
+
+
+    renderTransfers(
+        transfers
+    );
+
+
+    lastSettlement = {
+
+        expected,
+        paid,
+        balances,
+        transfers
+
+    };
+
+
+    document
+        .getElementById(
+            "resultCard"
+        )
+        .classList.add(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "transferCard"
+        )
+        .classList.add(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "resultCard"
+        )
+        .scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+
+        });
+
+}
+
+
+/* ==================================================
+   RESULTS
+================================================== */
+
+function renderResults(
+    expected,
+    paid,
+    balances
+) {
+
+    const box =
+        document.getElementById(
+            "resultList"
+        );
+
+
+    box.innerHTML =
+
+        data.members
+            .map(
+                name => {
+
+                    const balance =
+                        roundMoney(
+                            balances[name]
+                        );
+
+
+                    let cls =
+                        "balance-zero";
+
+
+                    let text =
+                        "剛好結清";
+
+
+                    if (
+                        balance > 0.01
+                    ) {
+
+                        cls =
+                            "balance-positive";
+
+                        text =
+                            `應收
+                            ${formatMoney(
+                                balance
+                            )}`;
+
+                    }
+
+                    else if (
+                        balance < -0.01
+                    ) {
+
+                        cls =
+                            "balance-negative";
+
+                        text =
+                            `應付
+                            ${formatMoney(
+                                Math.abs(
+                                    balance
+                                )
+                            )}`;
+
+                    }
+
+
+                    return `
+
+                        <div
+                            class="person-result"
+                        >
+
+                            <div
+                                class="person-top"
+                            >
+
+                                <div
+                                    class="person-name"
+                                >
+
+                                    ${escapeHTML(
+                                        name
+                                    )}
+
+                                </div>
+
+
+                                <div
+                                    class="person-balance ${cls}"
+                                >
+
+                                    ${text}
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="person-detail"
+                            >
+
+                                <span>
+
+                                    實際已付
+                                    ${formatMoney(
+                                        paid[name]
+                                    )}
+
+                                </span>
+
+
+                                <span>
+
+                                    實際應付
+                                    ${formatMoney(
+                                        expected[name]
+                                    )}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   TRANSFERS
+================================================== */
+
+function calculateTransfers(
+    balances
+) {
+
+    let creditors = [];
+
+    let debtors = [];
+
+
+    Object.keys(
+        balances
+    ).forEach(
+        name => {
+
+            const amount =
+                roundMoney(
+                    balances[name]
+                );
+
+
+            if (
+                amount > 0.01
+            ) {
+
+                creditors.push({
+
+                    name: name,
+
+                    amount: amount
+
+                });
+
+            }
+
+            else if (
+                amount < -0.01
+            ) {
+
+                debtors.push({
+
+                    name: name,
+
+                    amount:
+                        Math.abs(
+                            amount
+                        )
+
+                });
+
+            }
+
+        }
+    );
+
+
+    creditors.sort(
+        (a, b) =>
+            b.amount - a.amount
+    );
+
+
+    debtors.sort(
+        (a, b) =>
+            b.amount - a.amount
+    );
+
+
+    const transfers = [];
+
+
+    let i = 0;
+
+    let j = 0;
+
+
+    while (
+
+        i < debtors.length &&
+
+        j < creditors.length
+
+    ) {
+
+        const debtor =
+            debtors[i];
+
+
+        const creditor =
+            creditors[j];
+
+
+        const amount =
+            roundMoney(
+                Math.min(
+                    debtor.amount,
+                    creditor.amount
+                )
+            );
+
+
+        transfers.push({
+
+            from:
+                debtor.name,
+
+            to:
+                creditor.name,
+
+            amount:
+                amount
+
+        });
+
+
+        debtor.amount =
+            roundMoney(
+                debtor.amount -
+                amount
+            );
+
+
+        creditor.amount =
+            roundMoney(
+                creditor.amount -
+                amount
+            );
+
+
+        if (
+            debtor.amount < 0.01
+        ) {
+
+            i++;
+
+        }
+
+
+        if (
+            creditor.amount < 0.01
+        ) {
+
+            j++;
+
+        }
+
+    }
+
+
+    return transfers;
+
+}
+
+
+/* ==================================================
+   RENDER TRANSFERS
+================================================== */
+
+function renderTransfers(
+    transfers
+) {
+
+    const box =
+        document.getElementById(
+            "transferList"
+        );
+
+
+    if (
+        transfers.length === 0
+    ) {
+
+        box.innerHTML =
+            `
+            <div class="empty">
+
+                🎉 大家已經剛好結清，
+                不需要轉帳！
+
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+
+        transfers
+            .map(
+                transfer =>
+
+                    `
+                    <div
+                        class="transfer-item"
+                    >
+
+                        <div>
+
+                            <b>
+                                ${escapeHTML(
+                                    transfer.from
+                                )}
+                            </b>
+
+                            <span
+                                class="transfer-arrow"
+                            >
+                                →
+                            </span>
+
+                            <b>
+                                ${escapeHTML(
+                                    transfer.to
+                                )}
+                            </b>
+
+                        </div>
+
+
+                        <div
+                            class="transfer-amount"
+                        >
+
+                            ${formatMoney(
+                                transfer.amount
+                            )}
+
+                        </div>
+
+                    </div>
+                    `
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   COPY
+================================================== */
+
+function buildCopyText() {
+
+    if (
+        !lastSettlement
+    ) {
+
+        return "";
+
+    }
+
+
+    const {
+
+        expected,
+
+        paid,
+
+        balances,
+
+        transfers
+
+    } = lastSettlement;
+
+
+    let text =
+        "💰 AA. 分帳神器 V4\n\n";
+
+
+    text +=
+        "【每個人的帳】\n\n";
+
+
+    data.members.forEach(
+        name => {
+
+            const balance =
+                roundMoney(
+                    balances[name]
+                );
+
+
+            text +=
+                `${name}\n`;
+
+
+            text +=
+                `實際已付：
+${formatMoney(
+    paid[name]
+)}\n`;
+
+
+            text +=
+                `實際應付：
+${formatMoney(
+    expected[name]
+)}\n`;
+
+
+            if (
+                balance > 0.01
+            ) {
+
+                text +=
+                    `應收：
+${formatMoney(
+    balance
+)}\n`;
+
+            }
+
+            else if (
+                balance < -0.01
+            ) {
+
+                text +=
+                    `應付：
+${formatMoney(
+    Math.abs(
+        balance
+    )
+)}\n`;
+
+            }
+
+            else {
+
+                text +=
+                    "已結清\n";
+
+            }
+
+
+            text += "\n";
+
+        }
+    );
+
+
+    text +=
+        "【最終轉帳】\n";
+
+
+    if (
+        transfers.length === 0
+    ) {
+
+        text +=
+            "大家已經結清，不需要轉帳。\n";
+
+    }
+
+    else {
+
+        transfers.forEach(
+            transfer => {
+
+                text +=
+                    `${transfer.from} → ${transfer.to}：` +
+
+                    `${formatMoney(
+                        transfer.amount
+                    )}\n`;
+
+            }
+        );
+
+    }
+
+
+    return text;
+
+}
+
+
+/* ==================================================
+   COPY BUTTON
+================================================== */
+
+function copyResult() {
+
+    const text =
+        buildCopyText();
+
+
+    if (!text)
+        return;
+
+
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
+
+        navigator.clipboard
+            .writeText(text)
+
+            .then(
+                () => {
+
+                    alert(
+                        "✅ 結算結果已複製！"
+                    );
+
+                }
+            )
+
+            .catch(
+                () => {
+
+                    fallbackCopy(text);
+
+                }
+            );
+
+    }
+
+    else {
+
+        fallbackCopy(text);
+
+    }
+
+}
+
+
+function fallbackCopy(text) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.value =
+        text;
+
+
+    document.body.appendChild(
+        textarea
+    );
+
+
+    textarea.select();
+
+
+    document.execCommand(
+        "copy"
+    );
+
+
+    textarea.remove();
+
+
+    alert(
+        "✅ 結算結果已複製！"
+    );
+
+}
+
+
+/* ==================================================
+   HIDE RESULT
+================================================== */
+
+function hideResults() {
+
+    document
+        .getElementById(
+            "resultCard"
+        )
+        .classList.remove(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "transferCard"
+        )
+        .classList.remove(
+            "show"
+        );
+
+
+    lastSettlement =
+        null;
+
+}
+
+
+/* ==================================================
+   RENDER ALL
+================================================== */
+
+function renderAll() {
+
+    renderMembers();
+
+    renderPaymentForm();
+
+    renderPayments();
+
+    renderTotal();
+
+    hideResults();
+
+    setPaymentMode(
+        currentPaymentMode
+    );
+
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+function resetAll() {
+
+    if (
+        !confirm(
+            "確定要清除本次所有分帳資料嗎？"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    data = {
+
+        members: [],
+
+        payments: []
+
+    };
+
+
+    lastSettlement =
+        null;
+
+
+    localStorage.removeItem(
+        "AA_V4_DATA"
+    );
+
+
+    renderAll();
+
+}
+
+
+/* ==================================================
+   EVENTS
+================================================== */
+
+document
+    .getElementById(
+        "paymentAmount"
+    )
+    .addEventListener(
+        "input",
+        updateNewPaymentStatus
+    );
+
+
+document
+    .getElementById(
+        "memberInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                addMember();
+
+            }
+
+        }
+    );
+
+
+/* ==================================================
+   START
+================================================== */
+
+loadData();
+
+
+/* ==================================================
+   PWA SERVICE WORKER
+================================================== */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+            .register("./service-worker.js?v=2")
+            .then(() => {
+
+                console.log(
+                    "AA. 分帳神器 PWA 已啟用"
+                );
+
+            })
+            .catch(error => {
+
+                console.log(
+                    "PWA 啟用失敗：",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+</script>
+
+</body>
+</html> 
